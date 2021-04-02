@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="FB_piec" Id="{a93a0b2e-5986-4e06-b667-625518369fa2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_piec
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+    stan:INT ;
+    pozycjaWzdluz:INT ;
+    pozycjaHoruzontalna:INT ;	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE stan OF
+    0:
+        IF pozycjaWzdluz<430 THEN
+            pozycjaWzdluz:=pozycjaWzdluz +1;
+        END_IF
+        IF pozycjaWzdluz=430 THEN
+            stan:=1;
+        END_IF
+    1:
+        IF pozycjaHoruzontalna<110 THEN
+            pozycjaHoruzontalna:=pozycjaHoruzontalna +1;
+        END_IF
+        IF pozycjaHoruzontalna = 110 THEN
+            stan:=3;
+        END_IF
+    2:
+        IF pozycjaWzdluz < 650 THEN
+            pozycjaWzdluz:=pozycjaWzdluz +1;
+        END_IF
+        IF pozycjaWzdluz = 650 THEN
+            stan:=3;
+        END_IF
+    3:
+        metoda_Restart();
+
+END_CASE
+]]></ST>
+    </Implementation>
+    <Method Name="metoda_Restart" Id="{d17195e1-c8c8-46a7-ac62-ff5c67235533}">
+      <Declaration><![CDATA[METHOD metoda_Restart : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pozycjaWzdluz :=0;
+pozycjaHoruzontalna :=0;
+stan :=0;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_piec">
+      <LineId Id="46" Count="25" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_piec.metoda_Restart">
+      <LineId Id="6" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

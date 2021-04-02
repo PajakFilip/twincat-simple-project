@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="MAIN" Id="{18596b13-74dd-4adc-9fd9-0da5bf571f0e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+    cola:FB_piec; 
+    czasoOpuzniacz:TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[czasoOpuzniacz(IN:=TRUE,PT:=T#10MS);
+IF  czasoOpuzniacz.Q=TRUE AND DVL.stanprzycisku=TRUE THEN
+    cola();
+    czasoOpuzniacz(IN:=FALSE);
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="17" Count="0" />
+      <LineId Id="9" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
